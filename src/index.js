@@ -1,12 +1,5 @@
 import React from "react";
 import { render } from "react-dom";
-import TodoList from "./components/TodoComponents/TodoList";
+import App from "./App";
 
-function App() {
-  return (
-    <div className="app">
-      <TodoList />
-    </div>
-  );
-}
 render(<App />, document.getElementById("root"));
