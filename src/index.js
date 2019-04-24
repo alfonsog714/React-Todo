@@ -1,5 +1,12 @@
-import React from 'react';
-import { render } from 'react-dom';
-import App from './App';
+import React from "react";
+import { render } from "react-dom";
+import TodoList from "./components/TodoComponents/TodoList";
 
-render(<App />, document.getElementById('root'));
+function App() {
+  return (
+    <div className="app">
+      <TodoList />
+    </div>
+  );
+}
+render(<App />, document.getElementById("root"));
