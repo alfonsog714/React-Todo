@@ -2,6 +2,8 @@ import React from "react";
 import TodoList from "./components/TodoComponents/TodoList";
 import TodoForm from "./components/TodoComponents/TodoForm";
 
+import "./index.scss";
+
 const todos = [
   {
     task: "Organize Garage",
@@ -19,48 +21,44 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      todosOnState: todos,
-      todo: {
-        task: "",
-        id: Date.now(),
-        completed: false
-      }
+      todos
     };
   }
 
-  addTodo = event => {
-    event.preventDefault();
+  addTodo = todo => {
     this.setState({
-      todosOnState: [...this.state.todosOnState, this.state.todo],
-      todo: {
-        task: "",
-        id: Date.now(),
-        completed: false
-      }
+      todos: [
+        ...this.state.todos,
+        { task: todo, id: Date.now(), completed: false }
+      ]
     });
   };
 
-  handleChange = event => {
-    // console.log(event.target.value);
+  toggleCompleted = id => {
     this.setState({
-      todo: {
-        ...this.state.todo,
-        [event.target.name]: event.target.value
-      }
+      todos: this.state.todos.map(todo =>
+        todo.id == id ? { ...todo, completed: !todo.completed } : todo
+      )
+    });
+  };
+
+  removeCompleted = () => {
+    this.setState({
+      todos: this.state.todos.filter(todo => !todo.completed)
     });
   };
 
   render() {
     return (
-      <div>
+      <div className="app">
         <h2>Welcome to your Todo App!</h2>
 
-        <TodoList array={this.state.todosOnState} />
-        <TodoForm
-          task={this.state.todo.task}
-          handleChange={this.handleChange}
-          addTodo={this.addTodo}
+        <TodoList
+          todos={this.state.todos}
+          toggleComplete={this.toggleCompleted}
         />
+        <TodoForm addTodo={this.addTodo} />
+        <button onClick={this.removeCompleted}>Clear Completed</button>
       </div>
     );
   }
